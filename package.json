@@ -1,0 +1,28 @@
+{
+  "name": "getmoviedata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getMovieData.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeadh/GetMovieData.git"
+  },
+  "keywords": [
+    "imdb",
+    "tmdb"
+  ],
+  "author": "adrian lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leeadh/GetMovieData/issues"
+  },
+  "homepage": "https://github.com/leeadh/GetMovieData#readme",
+  "dependencies": {
+    "moviedb": "^0.2.7",
+    "node-movie": "^2.0.0",
+    "request-promise": "^4.1.1"
+  }
+}
