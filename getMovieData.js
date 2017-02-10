@@ -1,6 +1,5 @@
 const APIkey = '27a78d4369e4cb5dc2ca8a5640545ead';
 const rp = require('request-promise');
-const async = require('async');
 const MovieDB = require('moviedb')(APIkey);
 const userAgentHeader = {
 	'User-Agent': 'Mozilla/5.0 (Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/24.0',
@@ -10,16 +9,15 @@ const userAgentHeader = {
 //(to get image poster)https://image.tmdb.org/t/p/w640/<poster_path>
 // to get youtube link https://www.youtube.com/watch?v=<key>
 
-var returnVal;
-function getMovieInformation(movieName, year) {
-	
+
+function getMovieInformation(movieName,callback) {
+	var returnVal;
 	var options = {
-		url: "http://www.omdbapi.com/?t=" + movieName + "&y=" + year + "&tomatoes=true&plot=shorte&r=json",
+		url: "http://www.omdbapi.com/?t=" + movieName + "&y=&tomatoes=true&plot=shorte&r=json",
 		headers: userAgentHeader,
 		json: true,
 		timeout:3000000
 	};
-
 	rp(options)
 	.then(function (repos) {
 		returnVal = repos;
@@ -32,15 +30,18 @@ function getMovieInformation(movieName, year) {
 		}, function (err, res) {
 			youtubeURL = "https://www.youtube.com/watch?v=" + res.youtube[0].source;
 			returnVal.youtubeURL = youtubeURL;
-			console.dir(returnVal, {
-				depth: 3
-			});
-			return returnVal;
+			callback(returnVal);
 		});
 	}).catch (function (err) {
 		console.log(err);
 	});
-
 }
 
+
+getMovieInformation("Rogue One: A Star Wars Story", function(data) {
+		console.log(data)
+  getMovieInformation("Split", function(data) {
+  		console.log(data)
+  });
+});
 
