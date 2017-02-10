@@ -1,13 +1,12 @@
 const APIkey = '27a78d4369e4cb5dc2ca8a5640545ead';
 const rp = require('request-promise');
+var movieList=["Rogue One: A Star Wars Story","Split"];// will need to query from DB to get All movie names
+const async=require('async')
 const MovieDB = require('moviedb')(APIkey);
 const userAgentHeader = {
 	'User-Agent': 'Mozilla/5.0 (Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/24.0',
 	'Content-Type': 'application/x-www-form-urlencoded'
 };
-
-//(to get image poster)https://image.tmdb.org/t/p/w640/<poster_path>
-// to get youtube link https://www.youtube.com/watch?v=<key>
 
 
 function getMovieInformation(movieName,callback) {
@@ -38,6 +37,27 @@ function getMovieInformation(movieName,callback) {
 }
 
 
+
+async.each(movieList,
+  function(item, callback){
+    getMovieInformation(item, function (data){
+    	console.log(item)
+    	console.log(data)
+      	//write to mongoDB here --> Insert item,data into database
+      	callback();
+    });
+  },
+  function(err){
+    if(err){
+    	console.log(err)
+    }else{
+    	console.log("finished")
+    }
+  }
+);
+
+
+/*
 getMovieInformation("Rogue One: A Star Wars Story", function(data) {
 		console.log(data)
   getMovieInformation("Split", function(data) {
@@ -45,3 +65,4 @@ getMovieInformation("Rogue One: A Star Wars Story", function(data) {
   });
 });
 
+*/
